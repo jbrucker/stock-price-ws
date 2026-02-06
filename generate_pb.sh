@@ -1,0 +1,1 @@
+python -m grpc_tools.protoc -Iapp/protos --python_out=app/protos app/protos/stock.proto

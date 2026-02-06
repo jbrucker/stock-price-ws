@@ -1,0 +1,6 @@
+# Packages needed only to generate protobuf file
+protobuf
+grpcio-tools
+
+# run-time requirements
+-r requirements.txt

@@ -1,0 +1,5 @@
+yfinance
+# yfinance returns Pandas DataFrame
+pandas
+fastapi
+uvicorn

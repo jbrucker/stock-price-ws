@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package yfinance.protos;
+
+// StockPrices: top-level message containing a symbol and repeated daily prices.
+// This file documents the binary format returned by the HTTP endpoint
+// `GET /stock/{symbol}/proto` which returns the serialized
+// `StockPrices` message with content-type `application/x-protobuf`.
+
+// Note: To use this with Python you can generate bindings with:
+//   protoc --python_out=. app/protos/stock.proto
+// which will produce `app/protos/stock_pb2.py`.
+
+message StockPrice {
+  // ISO date string (YYYY-MM-DD)
+  string date = 1;
+
+  // Prices in the quote currency
+  double open = 2;
+  double high = 3;
+  double low = 4;
+  double close = 5;
+
+  // Number of traded shares (or units)
+  int64 volume = 6;
+
+  // Optional fields
+  double dividends = 7;    // 0.0 when not present
+  double stock_splits = 8; // 0.0 when not present
+}
+
+message StockPrices {
+  // Ticker symbol in uppercase, e.g., "AAPL"
+  string symbol = 1;
+
+  // ISO timestamp when the response was generated (optional)
+  string retrieved_at = 2;
+
+  // Repeated daily price messages, ordered from earliest to latest
+  repeated StockPrice prices = 3;
+}
+
+// Example HTTP mapping (informational only):
+// GET /stock/{symbol}/proto
+//   Response-Header: Content-Type: application/x-protobuf
+//   Response-Body: binary serialization of StockPrices

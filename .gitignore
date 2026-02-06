@@ -1,0 +1,68 @@
+**/env/
+**/venv/
+/CONFIG.md
+# Wiki is a separate repo
+wiki/
+
+# environment variables
+.env
+.env*
+
+# testing
+coverage/
+.mypy_cache/
+.pytest_cache/
+
+# next.js
+.next/
+out/
+
+# Vite cache
+.vite/
+
+# production
+build/
+
+# build output
+dist/
+
+# metadata / cache
+package-lock.json
+yarn.lock
+__pycache__/
+.docker/
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+
+# Logs, including npm-debug.log*, etc.
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Misc
+.DS_Store
+dist-ssr
+coverage
+*.local
+*.pem
+unused/
+
+# Editor files
+*.swp
+*.back
+*.vscode
+.vscode/*
+!.vscode/extensions.json
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
