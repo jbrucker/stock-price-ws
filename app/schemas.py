@@ -7,14 +7,15 @@ from pydantic import BaseModel, Field
 
 
 class StockPrice(BaseModel):
-    date: str = Field(..., description="ISO date string (YYYY-MM-DD)")
-    open: float
-    high: float
-    low: float
-    close: float
-    volume: int
-    dividends: Optional[float] = None
-    stock_splits: Optional[float] = None
+    date: str = Field(..., description="Date in ISO format (YYYY-MM-DD)")
+    open: float = Field(..., description="Opening price for the day")
+    high: float = Field(..., description="Highest price for the day")
+    low: float = Field(..., description="Lowest price for the day")
+    close: float = Field(..., description="Closing price for the day")
+    volume: int = Field(..., description="Trading volume, in shares")
+    dividends: Optional[float] = Field(default=None, description="Dividend paid")
+    stock_splits: Optional[float] = Field(default=None,
+       description="Number of shares after stock split, if any")
 
 
 class StockMetadata(BaseModel):
@@ -41,7 +42,7 @@ class StockInfoSchema(BaseModel):
     metadata: Optional[StockMetadata] = None
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "symbol": "AAPL",
                 "retrieved_at": datetime.utcnow().isoformat(),

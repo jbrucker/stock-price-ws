@@ -1,4 +1,4 @@
-from app.models import stock_info
+from app.services import stock_info
 
 # Facade for easier imports
 StockInfo = stock_info.StockInfo

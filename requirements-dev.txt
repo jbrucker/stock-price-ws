@@ -1,6 +1,12 @@
-# Packages needed only to generate protobuf file
+# Packages needed to generate protobuf Python "bindings" 
+# from protobuf schema file. Not needed for runtime.
+
+# I used protobuf and the protobuf-protoc-bin packages
 protobuf
-grpcio-tools
+protobuf-protoc-bin
+
+# *Instead* of protobuf-protoc-bin you can use this:
+#grpcio-tools
 
 # run-time requirements
 -r requirements.txt

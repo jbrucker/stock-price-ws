@@ -116,10 +116,11 @@ class StockInfo:
             }
 
             # Add additional fields if they exist
-            if 'Dividends' in row and row['Dividends'] > 0:
+            # row['Dividends'] > 0 returns np.False, so cast to bool.
+            if 'Dividends' in row and row['Dividends'] and float(row['Dividends']) > 0:
                 price_data['dividends'] = float(row['Dividends'])
 
-            if 'Stock Splits' in row and row['Stock Splits'] > 0:
+            if 'Stock Splits' in row and row['Stock Splits'] and float(row['Stock Splits']) > 0:
                 price_data['stock_splits'] = float(row['Stock Splits'])
 
             price_list.append(price_data)
@@ -181,7 +182,7 @@ class StockInfo:
 
 # Example usage
 if __name__ == "__main__":
-    draw_line = lambda: print("-" * 60)  # noqa: E731 Do not assign a lambda expression
+    draw_line = lambda: print("-" * 64)  # noqa: E731 Do not assign a lambda expression
     # Example 1: Get last 5 days of Apple stock data as JSON
     NUM_DAYS = 5
     print(f"Example 1: Getting last 5 days of Apple (AAPL) stock prices as JSON")
@@ -208,7 +209,7 @@ if __name__ == "__main__":
         msft_list = msft.as_list()
         print(f"Type of response: {type(msft_list)}")
         print(f"Number of days: {len(msft_list)}")
-        print("\nData structure:")
+        print("\nList structure:")
         for i, day_data in enumerate(msft_list):
             print(f"[{i}]: {day_data}")
 

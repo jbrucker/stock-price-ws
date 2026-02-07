@@ -2,4 +2,5 @@ yfinance
 # yfinance returns Pandas DataFrame
 pandas
 fastapi
+protobuf
 uvicorn

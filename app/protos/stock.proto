@@ -2,14 +2,11 @@ syntax = "proto3";
 
 package yfinance.protos;
 
-// StockPrices: top-level message containing a symbol and repeated daily prices.
-// This file documents the binary format returned by the HTTP endpoint
-// `GET /stock/{symbol}/proto` which returns the serialized
-// `StockPrices` message with content-type `application/x-protobuf`.
-
-// Note: To use this with Python you can generate bindings with:
-//   protoc --python_out=. app/protos/stock.proto
-// which will produce `app/protos/stock_pb2.py`.
+// Note: To use this with Python you must generate Python bindings.
+// See the script generate_pb.sh for a detailed command.
+// In general:
+//   protoc --python_out=app/protos app/protos/stock.proto
+// which will generate `app/protos/stock_pb2.py`.
 
 message StockPrice {
   // ISO date string (YYYY-MM-DD)
@@ -25,8 +22,8 @@ message StockPrice {
   int64 volume = 6;
 
   // Optional fields
-  double dividends = 7;    // 0.0 when not present
-  double stock_splits = 8; // 0.0 when not present
+  optional double dividends = 7;
+  optional double stock_splits = 8;
 }
 
 message StockPrices {
