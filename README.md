@@ -4,7 +4,7 @@ The purpose of this code is to illustrate how to return data
 in Protobuf format, and to compare the size of large messages
 using JSON and Protobuf format for some realistic data.
 
-The application returns historical stock price data from YFinance.
+The application returns historical stock price data for a single stock from YFinance.
 
 After you install dependencies and run the application server,
 it will expose a single endpoint:
@@ -13,13 +13,15 @@ GET /stock/{symbol}?limit=ndays
 ```
 where `?limit=ndays` is an optional query parameter (default is 100 days).
 
-Use the HTTP `Accepts:` header to choose `application/json` or `applicatoin/protobuf` format:
+The endpoint returns either JSON or Protobuf format stock quote data.
+
+Use the HTTP `Accepts:` header to specify either `application/json` or `application/protobuf`:
 ```
 GET /stock/MSFT
 Accepts: application/protobuf
 ```
 
-It also provides interactive OpenAPI docs at <http://localhost:8000/docs>
+The service also has an interacive OpenAPI docs at <http://localhost:8000/docs>
 
 ### Compare JSON and Protobuf - Download Price History
 
@@ -31,7 +33,9 @@ curl -H "application/json" -o msft.json '/stock/MSFT?limit=200'
 curl -H "application/protobuf" -o msft.pb '/stock/MSFT?limit=200'
 ```
 
-How much smaller is the protobuf file?
+The output files are `msft.json` and `msft.pb`.
+
+How much smaller is the protobuf file?  If you use a different value for `limit` does the ratio of sizes change?
 
 `curl` is a handy command-line tool for interacting with web services.
 
@@ -80,7 +84,25 @@ with `SRC_DIR=app/protos` and `DST_DIR=app/protos`.
 On my machine, both commands produced identical output `protos/stock_pb2.py`.
 For the final code, I used the `protoc` command to generate Python code.
 
+## Historical Stock Prices
+
+For each day that the stock market is open for trading, there is one
+line of stock price data. It contains the fields:
+
+Field  | Description
+-------|---------------------
+Date   | Date string in format "yyyy-mm-dd"
+Open   | Opening price on that day
+Close  | Closing price on that day
+High   | Highest price for the day
+Low    | Lowest price for the day
+Volume | Number of shares traded during trading hours
+Dividend | Optional. Dividend earned on that day (X-Div date)
+Split  | Optional. Share split effective on that day
+Da
+c
+
 ## Resources
 
 - [YFinance Github Repo](https://github.com/ranaroussi/yfinance)
-- [Protobuf Documentation](https://protobuf.dev/) and [Python Tutorial](https://protobuf.dev/getting-started/pythontutorial/)
+- [Protobuf Documentation](https://protobuf.dev/) and Protobuf [Python Tutorial](https://protobuf.dev/getting-started/pythontutorial/)
