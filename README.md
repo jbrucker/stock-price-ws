@@ -1,6 +1,6 @@
 ## Historical Stock Prices using YFinance
 
-The purpose of this code is to illustrate how to return data
+The purpose of this code is to illustrate how a web service can return data
 in Protobuf format, and to compare the size of large messages
 using JSON and Protobuf format for some realistic data.
 
@@ -8,6 +8,7 @@ The application returns historical stock price data for a single stock from YFin
 
 After you install dependencies and run the application server,
 it will expose a single endpoint:
+
 ```
 GET /stock/{symbol}?limit=ndays
 ```
@@ -21,37 +22,35 @@ GET /stock/MSFT
 Accepts: application/protobuf
 ```
 
-The service also has an interacive OpenAPI docs at <http://localhost:8000/docs>
+The service also has interacive OpenAPI docs at <http://localhost:8000/docs>
 
-### Compare JSON and Protobuf - Download Price History
+## Run Application and Get Stock Price Data
 
-To compare the size of Protobuf and JSON, download the same price data in both
-formats and save to a file.  You can do this using the `curl` command line utility:
+1.  Create and activate a virtual env. In the virtual env, enter:
 
-```shell
-curl -H "application/json" -o msft.json '/stock/MSFT?limit=200'
-curl -H "application/protobuf" -o msft.pb '/stock/MSFT?limit=200'
-```
+    ```shell
+    pip install -r requirements.txt
+    ```
 
-The output files are `msft.json` and `msft.pb`.
+2.  Then run the REST server, listening on port 8000:
 
-How much smaller is the protobuf file?  If you use a different value for `limit` does the ratio of sizes change?
+    ```shell
+    python -m app.main
+    ```
 
-`curl` is a handy command-line tool for interacting with web services.
+3.  In a separate terminal window, get some historical price data. This example uses Microsoft (MSFT) and 200 days of data. It uses `curl`, but you could also use `wget` or a browser extension for REST, like Rested, provided that you can specify HTTP request headers.
 
-### Configure the Application
+    ```shell
+    curl -H "Accepts: application/json" -o msft.json 'http://localhost:8000/stock/MSFT?limit=200'
+    curl -H "Accepts: application/protobuf" -o msft.pb 'http://localhost:8000/stock/MSFT?limit=200'
+    ```
 
-Create and activate a virtual env. In the virtual env, enter:
+    The data is saved to files `msft.json` and `msft.pb`.
 
-```
-pip install -r requirements.txt
-```
+4.  How much smaller is the protobuf file? Please let me know.
 
-### Run the stock price service (in virtual env)
+> `curl` is a useful command-line tool for interacting with web services.
 
-```
-python -m app.main
-```
 
 ## How to Compile the Protobuf Definition File
 
@@ -73,7 +72,7 @@ The output is a file named `app/protos/stock_pb2.py`.
 According to the [protobuf documentation](https://protobuf.dev/getting-started/pythontutorial/),
 another way to compile the Protobuf definition file is:
 
-```
+```shell
 pip install protobuf 
 pip install protobuf-protoc-bin  # for 'protoc' binary
 protoc --proto_path=$SRC_DIR --python_out=$DST_DIR $SRC_DIR/stock.proto

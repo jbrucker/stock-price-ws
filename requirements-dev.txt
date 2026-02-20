@@ -8,5 +8,5 @@ protobuf-protoc-bin
 # *Instead* of protobuf-protoc-bin you can use this:
 #grpcio-tools
 
-# run-time requirements
+# add the run-time requirements
 -r requirements.txt
