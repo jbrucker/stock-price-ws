@@ -38,7 +38,7 @@ The service also has interacive OpenAPI docs at <http://localhost:8000/docs>
     python -m app.main
     ```
 
-3.  In a separate terminal window, get some historical price data. This example uses Microsoft (MSFT) and 200 days of data. It uses `curl`, but you could also use `wget` or a browser extension for REST, like Rested, provided that you can specify HTTP request headers.
+3.  In a separate terminal window, get some historical price data. This example uses Microsoft (MSFT) and 200 days of data. It uses `curl`, but you could also use `wget`.
 
     ```shell
     curl -H "Accepts: application/json" -o msft.json 'http://localhost:8000/stock/MSFT?limit=200'
@@ -98,8 +98,6 @@ Low    | Lowest price for the day
 Volume | Number of shares traded during trading hours
 Dividend | Optional. Dividend earned on that day (X-Div date)
 Split  | Optional. Share split effective on that day
-Da
-c
 
 ## Resources
 
